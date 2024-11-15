@@ -108,7 +108,7 @@ $conn->close();
     <div class="main-content">
         <div class="topbar">
             <div class="user-info">
-                <span>Welcome, <?php echo htmlspecialchars($username); ?></span>
+                <span>Welcome, <?php echo htmlspecialchars($image); ?></span>
             </div>
             <a href="logout_code.php"><i class='bx bx-log-out'></i> Logout</a>
         </div>

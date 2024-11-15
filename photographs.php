@@ -121,7 +121,7 @@ if ($conn) {
             <div class="row">
                 <?php if (!empty($photographs)): ?>
                     <?php foreach ($photographs as $photo): ?>
-                        <div class="col-md-4 mb-4">
+                        <div class="col-md-3 mb-3">
                             <div class="card">
                             <div class="image-container">
     <div class="image-box">

@@ -17,6 +17,35 @@
         .full-height {
             height: calc(100vh - 56px); /* Adjust 56px if your navbar height is different */
         }
+     .image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Space between each image box */
+    justify-content: center; /* Centers the images */
+}
+
+.image-box {
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: shadow effect */
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the box */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .image-box {
+        width: 100%; /* Full width on smaller screens */
+        height: auto; /* Let height adjust to image ratio */
+    }
+}
+
     </style>
 </head>
 <body>
@@ -87,8 +116,12 @@
             include 'db.php';
             $result = $conn->query("SELECT * FROM Photographs");
             while ($row = $result->fetch_assoc()) {
-                echo '<div class="col-md-4 portfolio-item">';
-                echo '<img src="' . $row['image_url'] . '" class="img-fluid" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
+                echo '<div class="col-md-3 portfolio-item">';
+                echo '<div class="image-container">';
+                echo '<div class="image-box">';
+                echo '<img  src="' . $row['image_url'] . '" class="img-fluid" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
+                echo '</div>';
+                echo '</div>';
                 echo '</div>';
             }
             ?>
@@ -114,12 +147,14 @@
     <h2 class="text-center">Gallery</h2>
     <div class="row">
         <?php
-        $result = $conn->query("SELECT * FROM Photographs");
+        $result = $conn->query("SELECT * FROM Photographs"); //img-fluid img-thumbnail
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo '<div class="col-lg-3 col-md-4 col-6 mb-4">';
-                echo '<div class="d-block mb-4 h-100">';
-                echo '<img class="img-fluid img-thumbnail" src="' . $row['image_url'] . '" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
+                echo '<div class="col-md-3 portfolio-item">';
+                echo '<div class="image-container">';
+                echo '<div class="image-box">';
+                echo '<img class ="img-fluid img-thumbnail" src="' . $row['image_url'] . '" class="img-fluid" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
+                echo '</div>';
                 echo '</div>';
                 echo '</div>';
             }
