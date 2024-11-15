@@ -46,6 +46,7 @@
     }
 }
 
+
     </style>
 </head>
 <body>
@@ -61,13 +62,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#portfolio">Portfolio</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
+                    <a class="nav-link" href="Gallery.php">Gallery</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Enquiries.php">Enquir</a>
                 </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
@@ -113,17 +117,25 @@
         <h2 class="text-center">Portfolio</h2>
         <div class="row">
             <?php
+            $limit = 1;
             include 'db.php';
             $result = $conn->query("SELECT * FROM Photographs");
             while ($row = $result->fetch_assoc()) {
-                echo '<div class="col-md-3 portfolio-item">';
-                echo '<div class="image-container">';
-                echo '<div class="image-box">';
-                echo '<img  src="' . $row['image_url'] . '" class="img-fluid" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
+                if ($limit < 5){
+                    echo '<div class="col-md-3 portfolio-item">';
+                    echo '<div class="image-container">';
+                    echo '<div class="image-box">';
+                    echo '<img class ="img-fluid img-thumbnail" src="' . $row['image_url'] . '" class="img-fluid" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                    $limit = $limit +1;
+                }
+            
             }
+            echo '<div class="seemore text-center w-100">';
+            echo '<a  href="Gallery.php">See more</a>';
+            echo '</div>';
             ?>
         </div>
     </section>
@@ -140,6 +152,7 @@
                 <img src="https://placehold.co/600x400" class="img-fluid" alt="About Image" onerror="this.onerror=null;this.src='https://placehold.co/600x400';">
             </div>
         </div>
+        
     </section>
 
     
@@ -147,17 +160,27 @@
     <h2 class="text-center">Gallery</h2>
     <div class="row">
         <?php
+        $limit = 1;
         $result = $conn->query("SELECT * FROM Photographs"); //img-fluid img-thumbnail
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo '<div class="col-md-3 portfolio-item">';
-                echo '<div class="image-container">';
-                echo '<div class="image-box">';
-                echo '<img class ="img-fluid img-thumbnail" src="' . $row['image_url'] . '" class="img-fluid" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
+                if ($limit < 5){
+                    echo '<div class="col-md-3 portfolio-item">';
+                    echo '<div class="image-container">';
+                    echo '<div class="image-box">';
+                    echo '<img class ="img-fluid img-thumbnail" src="' . $row['image_url'] . '" class="img-fluid" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                    $limit = $limit +1;
+                }
+                // echo '<h1>$limit</h1>';
+                
+                
             }
+            echo '<div class="seemore text-center w-100">';
+            echo '<a  href="Gallery.php">See more</a>';
+            echo '</div>';
         } else {
             // Display placeholder images if no photographs are found
             for ($i = 0; $i < 8; $i++) {
