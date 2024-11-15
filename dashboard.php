@@ -25,7 +25,7 @@ $username = $_SESSION['username'];
         </div>
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class='bx bx-home'></i> Home</a></li>
-            <li><a href="#"><i class='bx bx-user'></i> Profile</a></li>
+            <li><a href="profile.php"><i class='bx bx-user'></i> Profile</a></li>
             <li><a href="#"><i class='bx bx-photo-album'></i> Galleries</a></li>
             <li><a href="photographs.php"><i class='bx bx-image'></i> Photographs</a></li>
             <li><a href="#"><i class='bx bx-envelope'></i> Enquiries</a></li>
