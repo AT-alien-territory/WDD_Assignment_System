@@ -1,52 +1,73 @@
 <?php
 session_start();
-require_once 'db.php'; // Include database connection file
+include 'db.php';
 
-// Set the directory where uploaded images will be saved
-$target_dir = "uploads/";
-if (!is_dir($target_dir)) {
-    mkdir($target_dir, 0777, true); // Create the directory if it doesn't exist
+// Ensure the request method is POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+    exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
-    $user_id = $_POST['user_id']; // User ID from form
-    $target_file = $target_dir . basename($_FILES["profile_picture"]["name"]);
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+// Ensure the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized access.']);
+    exit();
+}
 
-    // Verify the file is an image
-    $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
-    if ($check === false) {
-        echo json_encode(['status' => 'error', 'message' => 'The uploaded file is not a valid image.']);
+$user_id = $_SESSION['user_id'];
+
+// Check if a file is uploaded
+if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+    $fileTmpPath = $_FILES['profile_picture']['tmp_name'];
+    $fileName = $_FILES['profile_picture']['name'];
+    $fileSize = $_FILES['profile_picture']['size'];
+    $fileType = $_FILES['profile_picture']['type'];
+    $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+    // Allowed file extensions
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    if (!in_array(strtolower($fileExtension), $allowedExtensions)) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid file type. Only JPG, PNG, and GIF are allowed.']);
         exit();
     }
 
-    // Allow only certain file types
-    $allowed_formats = ['jpg', 'jpeg', 'png', 'gif'];
-    if (!in_array($imageFileType, $allowed_formats)) {
-        echo json_encode(['status' => 'error', 'message' => 'Only JPG, JPEG, PNG & GIF files are allowed.']);
-        exit();
+    // Generate a unique file name to prevent overwriting
+    $newFileName = uniqid() . '.' . $fileExtension;
+
+    // Destination folder for uploaded files
+    $uploadFileDir = 'uploads/profile_pictures/';
+    if (!is_dir($uploadFileDir)) {
+        mkdir($uploadFileDir, 0777, true); // Create the directory if it doesn't exist
     }
 
-    // Move the file to the target directory
-    if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
-        // Update the user's image path in the database
-        $stmt = $conn->prepare("UPDATE Users SET image = ? WHERE user_id = ?");
-        $stmt->bind_param("si", $target_file, $user_id);
+    $destPath = $uploadFileDir . $newFileName;
 
+    // Move the uploaded file to the destination folder
+    if (move_uploaded_file($fileTmpPath, $destPath)) {
+        // Update the user's profile picture in the database
+        $sql = "UPDATE users SET image_url = ? WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $conn->error]);
+            exit();
+        }
+        $stmt->bind_param('si', $destPath, $user_id);
+        echo  $stmt->error;    
         if ($stmt->execute()) {
-            // Redirect to profile page or display success message
-            $_SESSION['profile_picture'] = $target_file; // Update session if needed
-            echo json_encode(['status' => 'success', 'message' => 'Profile picture uploaded successfully!']);
+            // Update the session variable
+            $_SESSION['profile_picture'] = $destPath;
+
+            echo json_encode(['status' => 'success', 'message' => 'Profile picture updated successfully.']);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Database update failed: ' . $stmt->error]);
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update the database.']);
         }
 
         $stmt->close();
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Sorry, there was an error uploading your file.']);
+        echo json_encode(['status' => 'error', 'message' => 'Failed to upload the file.']);
     }
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'No file was uploaded or an error occurred with the upload.']);
+    echo json_encode(['status' => 'error', 'message' => 'No file uploaded or there was an error with the upload.']);
 }
 
 $conn->close();

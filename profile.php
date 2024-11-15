@@ -6,7 +6,11 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 $username = $_SESSION['username'];
-isset($_SESSION['phone']) ;
+
+// if (!isset($_POST['phone'])) {
+//     header("Location: login.php");
+// }
+// isset($_SESSION['phone']) ;
 $phone = $_SESSION['phone'];
 $email = $_SESSION['email'];
 $image = $_SESSION['profile_picture'];
@@ -25,28 +29,40 @@ $conn->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .profile-upload-container {
-            width: 100%;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-            display: flex;
-            gap: 50px;
-            align-items: center;
-        }
-        .profile-picture{
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background-image: url(<?php echo htmlspecialchars($image); ?>);
-            display: inline-block;
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 10px;
-            position: relative;
-            cursor: pointer;
-        }
+    width: 100%;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.profile-upload-container:hover {
+    box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+}
+.profile-picture {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-image: url(<?php echo htmlspecialchars($image); ?>);
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.profile-picture:hover {
+    opacity: 0.8;
+}
+
         .upload-btn {
             background-color: #1877f2;
             color: #fff;
@@ -70,6 +86,10 @@ $conn->close();
         .file-input {
             display: none;
         }
+        .content{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
     </style>
 </head>
 <body>
@@ -107,13 +127,14 @@ $conn->close();
                     <!-- Save button -->
                     <button type="submit" class="save-btn">Save</button>
                 </form>
-            </div>
-
-            <div class="content">
+                <div class="content d-flex flex-column gap-3 text-start ">
                 <h1>Name: <?php echo htmlspecialchars($username); ?></h1>
                 <h2>Email Address: <?php echo htmlspecialchars($email); ?></h2>
                 <h2>Phone Number: <?php echo htmlspecialchars($phone); ?></h2>
             </div>
+            </div>
+
+            
         </div>
     </div>
 
@@ -128,13 +149,11 @@ $conn->close();
 
         // Form submission handler using AJAX
         $('#uploadForm').on('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
-
-            // Create a FormData object to handle the file upload
+            e.preventDefault(); 
             var formData = new FormData(this);
-
-            // Make AJAX request
+            // alert("hi");
             $.ajax({
+                
                 url: $(this).attr('action'),
                 type: 'POST',
                 data: formData,
@@ -143,6 +162,7 @@ $conn->close();
                 success: function(response) {
                     // Parse the response
                     var data = JSON.parse(response);
+                    // alert(response);
 
                     // Display SweetAlert based on response status
                     if (data.status === 'success') {
