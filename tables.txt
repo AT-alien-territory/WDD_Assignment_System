@@ -4,7 +4,8 @@ CREATE TABLE Users (
     email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(20),
     address TEXT,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    image_url TEXT NULL
 );
 
 CREATE TABLE Photographs (
