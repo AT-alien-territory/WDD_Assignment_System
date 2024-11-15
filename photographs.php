@@ -37,6 +37,36 @@ if ($conn) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Space between each image box */
+    justify-content: center; /* Centers the images */
+}
+
+.image-box {
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: shadow effect */
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the box */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .image-box {
+        width: 100%; /* Full width on smaller screens */
+        height: auto; /* Let height adjust to image ratio */
+    }
+}
+</style>
+
 </head>
 <body>
 <div class="sidebar bg-dark text-white p-3">
@@ -93,7 +123,12 @@ if ($conn) {
                     <?php foreach ($photographs as $photo): ?>
                         <div class="col-md-4 mb-4">
                             <div class="card">
-                                <img src="<?php echo htmlspecialchars($photo['image_url']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($photo['title']); ?>">
+                            <div class="image-container">
+    <div class="image-box">
+        <img src="<?php echo htmlspecialchars($photo['image_url']); ?>" alt="<?php echo htmlspecialchars($photo['title']); ?>">
+    </div>
+</div>
+
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo htmlspecialchars($photo['title']); ?></h5>
                                     <p class="card-text"><?php echo htmlspecialchars($photo['description']); ?></p>
