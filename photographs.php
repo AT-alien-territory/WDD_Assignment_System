@@ -65,6 +65,97 @@ if ($conn) {
         height: auto; /* Let height adjust to image ratio */
     }
 }
+/*base code*/
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+}
+/*the animation definition*/
+@-webkit-keyframes hinge {
+  0% {
+    -webkit-transform-origin: top left;
+    transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out
+  }
+  20%,
+  60% {
+    -webkit-transform: rotate3d(0, 0, 1, 80deg);
+    transform: rotate3d(0, 0, 1, 80deg);
+    -webkit-transform-origin: top left;
+    transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out
+  }
+  40%,
+  80% {
+    -webkit-transform: rotate3d(0, 0, 1, 60deg);
+    transform: rotate3d(0, 0, 1, 60deg);
+    -webkit-transform-origin: top left;
+    transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    opacity: 1
+  }
+  100% {
+    -webkit-transform: translate3d(0, 700px, 0);
+    transform: translate3d(0, 700px, 0);
+    opacity: 0
+  }
+}
+@keyframes hinge {
+  0% {
+    -webkit-transform-origin: top left;
+    -ms-transform-origin: top left;
+    transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out
+  }
+  20%,
+  60% {
+    -webkit-transform: rotate3d(0, 0, 1, 80deg);
+    -ms-transform: rotate3d(0, 0, 1, 80deg);
+    transform: rotate3d(0, 0, 1, 80deg);
+    -webkit-transform-origin: top left;
+    -ms-transform-origin: top left;
+    transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out
+  }
+  40%,
+  80% {
+    -webkit-transform: rotate3d(0, 0, 1, 60deg);
+    -ms-transform: rotate3d(0, 0, 1, 60deg);
+    transform: rotate3d(0, 0, 1, 60deg);
+    -webkit-transform-origin: top left;
+    -ms-transform-origin: top left;
+    transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    opacity: 1
+  }
+  100% {
+    -webkit-transform: translate3d(0, 700px, 0);
+    -ms-transform: translate3d(0, 700px, 0);
+    transform: translate3d(0, 700px, 0);
+    opacity: 0
+  }
+}
+.hinge {
+  -webkit-animation-name: hinge;
+  animation-name: hinge
+}
+
 </style>
 
 </head>
@@ -186,6 +277,7 @@ if ($conn) {
                         type: 'POST',
                         data: { delete: true, photo_id: photoId },
                         success: function(response) {
+
                             Swal.fire('Deleted!', 'Your photograph has been deleted.', 'success').then(() => {
                                 location.reload();
                             });
@@ -198,6 +290,28 @@ if ($conn) {
             });
         });
     });
+    // Tip: avoid this ton of code using AniJS ;)
+
+var element = $('#square');
+
+// when mouseover execute the animation
+element.mouseover(function(){
+  
+  // the animation starts
+  element.toggleClass('hinge animated');
+  
+  // do something when animation ends
+  element.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e){
+   
+   // trick to execute the animation again
+    $(e.target).removeClass('hinge animated');
+  
+  });
+  
+});
+
 </script>
+<script src="https://cdn.rawgit.com/anijs/anijs/0.1.0/dist/anijs-min.js"></script>
+
 </body>
 </html>

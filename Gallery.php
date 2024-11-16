@@ -81,6 +81,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="Enquiries.php">Enquir</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pricing.php">price</a>
+                </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="logout_code.php">Logout</a>
@@ -124,7 +127,17 @@
     <footer class="bg-dark text-white text-center py-4">
         <p>&copy; 2024 Malcolm Lismore Photography. All Rights Reserved.</p>
     </footer>
-
+    <script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/67383e424304e3196ae378b5/1icpr6d9n';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-qJ7z2tFZ9Gog5AO+zDl5eP0m08Wgnn5GFE7XU1G6z6cHoX58xSHGvdEB89xxI1Y0" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0Z1E5S5R5S1vkp6mBf8j9iNK6B57g1H98z4ya4PvT+ebJr57" crossorigin="anonymous"></script>

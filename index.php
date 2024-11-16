@@ -73,6 +73,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="Enquiries.php">Enquir</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pricing.php">price</a>
+                </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="logout_code.php">Logout</a>
@@ -258,6 +261,46 @@
             © 2023 Photographer Portfolio. All rights reserved.
         </div>
     </footer>
+<header>
+    <!-- <h1>Welcome to Malcolm Lismore's Photography</h1>
+</header>
+
+<main>
+    <p>Feel free to browse our portfolio, check pricing, or contact us for your photography needs.</p>
+    <p>The chat bot in the bottom-right corner is here to assist you!</p>
+</main>
+
+<footer>
+    <p>&copy; 2024 Malcolm Lismore. All rights reserved.</p>
+</footer> -->
+
+
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/67383e424304e3196ae378b5/1icpr6d9n';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+    <!-- <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/YOUR_PROPERTY_ID/DEFAULT';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script> -->
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
