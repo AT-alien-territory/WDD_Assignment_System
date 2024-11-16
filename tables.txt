@@ -46,3 +46,10 @@ CREATE TABLE Enquiries
 ( enquiry_id INT AUTO_INCREMENT PRIMARY KEY,
  event_type VARCHAR(50), event_date DATE, 
  location VARCHAR(255), message TEXT );
+
+
+ CREATE TABLE Contect (
+    contect_id INT AUTO_INCREMENT PRIMARY KEY,
+    name  VARCHAR(50),
+    message TEXT
+ )

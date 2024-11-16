@@ -68,7 +68,7 @@
                     <a class="nav-link" href="Gallery.php">Gallery</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact</a>
+                    <a class="nav-link" href="contect.php">Contact</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Enquiries.php">Enquir</a>
