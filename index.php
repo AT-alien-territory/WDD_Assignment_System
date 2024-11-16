@@ -97,13 +97,13 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://placehold.co/800x400" class="d-block w-100" alt="First slide">
+                <img src="interanal_image\1.jpg" class="d-block w-100" alt="First slide">
             </div>
             <div class="carousel-item">
-                <img src="https://placehold.co/800x400" class="d-block w-100" alt="Second slide">
+                <img src="interanal_image\2.png" class="d-block w-100" alt="Second slide">
             </div>
             <div class="carousel-item">
-                <img src="https://placehold.co/800x400" class="d-block w-100" alt="Third slide">
+                <img src="interanal_image\3.jpg" class="d-block w-100" alt="Third slide">
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -119,27 +119,38 @@
     <section id="portfolio" class="container">
         <h2 class="text-center">Portfolio</h2>
         <div class="row">
-            <?php
-            $limit = 1;
-            include 'db.php';
-            $result = $conn->query("SELECT * FROM Photographs");
-            while ($row = $result->fetch_assoc()) {
-                if ($limit < 5){
-                    echo '<div class="col-md-3 portfolio-item">';
-                    echo '<div class="image-container">';
-                    echo '<div class="image-box">';
-                    echo '<img class ="img-fluid img-thumbnail" src="' . $row['image_url'] . '" class="img-fluid" alt="' . $row['title'] . '" onerror="this.onerror=null;this.src=\'https://placehold.co/600x400\';">';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-                    $limit = $limit +1;
-                }
+            <div class="col-md-3 portfolio-item">
+                    <div class="image-container">
+                    <div class="image-box">
+                    <img class ="img-fluid img-thumbnail" src="interanal_image\index_page\1.jpg"/>
+                    </div>
+                    </div>
+        </div>
+        <div class="col-md-3 portfolio-item">
+                    <div class="image-container">
+                    <div class="image-box">
+                    <img class ="img-fluid img-thumbnail" src="interanal_image\index_page\2.jpg"/>
+                    </div>
+                    </div>
+        </div>
+        <div class="col-md-3 portfolio-item">
+                    <div class="image-container">
+                    <div class="image-box">
+                    <img class ="img-fluid img-thumbnail" src="interanal_image\index_page\3.jpg"/>
+                    </div>
+                    </div>
+        </div>
+        <div class="col-md-3 portfolio-item">
+                    <div class="image-container">
+                    <div class="image-box">
+                    <img class ="img-fluid img-thumbnail" src="interanal_image\index_page\4.jpg"/>
+                    </div>
+                    </div>
+        </div>
+            <div class="seemore text-center w-100">
+            <a  href="Gallery.php">See more</a>
+            </div>
             
-            }
-            echo '<div class="seemore text-center w-100">';
-            echo '<a  href="Gallery.php">See more</a>';
-            echo '</div>';
-            ?>
         </div>
     </section>
 
@@ -164,7 +175,7 @@
     <div class="row">
         <?php
         $limit = 1;
-        $result = $conn->query("SELECT * FROM Photographs"); //img-fluid img-thumbnail
+        $result = $conn->query("SELECT * FROM Photographs ORDER BY photo_id DESC"); //img-fluid img-thumbnail
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 if ($limit < 5){
@@ -196,6 +207,64 @@
         }
         ?>
     </div>
+    <p></p>
+    <div class="row">
+            <!-- Basic Package -->
+            <div class="col-md-4">
+                <div class="card pricing-card">
+                    <div class="card-header">
+                        Basic Package
+                    </div>
+                    <div class="card-body">
+                        <p class="price">$500</p>
+                        <ul>
+                            <li>Up to 4 hours of shooting</li>
+                            <li>50 edited photos</li>
+                            <li>Online gallery access</li>
+                        </ul>
+                        <a href="enquiries.php" class="btn btn-primary">Inquire Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premium Package -->
+            <div class="col-md-4">
+                <div class="card pricing-card">
+                    <div class="card-header">
+                        Premium Package
+                    </div>
+                    <div class="card-body">
+                        <p class="price">$900</p>
+                        <ul>
+                            <li>Up to 8 hours of shooting</li>
+                            <li>150 edited photos</li>
+                            <li>Video highlights</li>
+                            <li>Online gallery + USB drive</li>
+                        </ul>
+                        <a href="enquiries.php" class="btn btn-primary">Inquire Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ultimate Package -->
+            <div class="col-md-4">
+                <div class="card pricing-card">
+                    <div class="card-header">
+                        Ultimate Package
+                    </div>
+                    <div class="card-body">
+                        <p class="price">$1500</p>
+                        <ul>
+                            <li>Full-day coverage (12 hours)</li>
+                            <li>Unlimited edited photos</li>
+                            <li>Video highlights + Full video</li>
+                            <li>Private photo book + Online gallery</li>
+                        </ul>
+                        <a href="enquiries.php" class="btn btn-primary">Inquire Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 </section>
 
 

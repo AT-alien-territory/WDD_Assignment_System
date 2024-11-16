@@ -51,7 +51,8 @@
     align-items: center;
     width: 100%;
     height: 300px;
-    background-image: url(https://placehold.co/100x400);
+    background-image: url('interanal_image/1.jpg');
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

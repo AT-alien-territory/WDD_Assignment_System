@@ -41,3 +41,8 @@ CREATE TABLE Enquiries (
     status VARCHAR(50),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
+
+CREATE TABLE Enquiries 
+( enquiry_id INT AUTO_INCREMENT PRIMARY KEY,
+ event_type VARCHAR(50), event_date DATE, 
+ location VARCHAR(255), message TEXT );

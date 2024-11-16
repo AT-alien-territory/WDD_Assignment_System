@@ -6,6 +6,7 @@
     <title>Photographer Portfolio</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        
         .portfolio-item {
             margin-bottom: 30px;
         }
@@ -25,8 +26,8 @@
 }
 
 .image-box {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     overflow: hidden;
     border-radius: 8px; /* Optional: rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: shadow effect */
@@ -51,9 +52,49 @@
     align-items: center;
     width: 100%;
     height: 300px;
-    background-image: url(https://placehold.co/100x400);
+    background-image: url('interanal_image/1.jpg');
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
 }
+.portfolio-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .image-box {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 8px; /* Optional: rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: shadow effect */
+            position: relative;
+        }
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image covers the box */
+            transition: transform 0.3s ease;
+        }
+        .image-box:hover img {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+        .image-details {
+            display: none; /* Initially hidden */
+            position: absolute;
+            bottom: -40px; /* Hidden below the image */
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            transition: bottom 0.3s ease;
+        }
+        .image-box:hover .image-details {
+            display: block;
+            bottom: 0; /* Slide up into view on hover */
+        }
 
     </style>
 </head>
@@ -61,6 +102,7 @@
     <?php
     session_start();
     include 'db.php';
+    
     ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Photographer</a>
@@ -97,26 +139,31 @@
         </div>
     </nav>
   <div class="page-image">
-  <h2>Pricing</h2>
+  <h2>Gallery</h2>
   </div>
     <!-- Gallery Section -->
     <div class="container my-5">
         <h2 class="text-center mb-5">Photography Gallery</h2>
         <div class="row">
-            <?php
-            // Assuming the gallery images are stored in a folder called 'images'
+        <?php
             $dir = "uploads/"; 
             $images = scandir($dir);
-
-            // Display images in a grid
             foreach ($images as $image) {
                 if ($image != "." && $image != "..") {
+                    $image_url = $dir.$image;
+                    $imageDetails = pathinfo($image); // Use the filename as details
+                    $stmt = $conn->prepare("SELECT title, description, category ,upload_date FROM photographs WHERE image_url =?");
+                     $stmt->bind_param("s", $image_url);
+                    $stmt->execute();
+                    $stmt->bind_result($title , $description,$category,$upload_date);
+                     $stmt->fetch();
+                    $stmt->close();
                     echo '<div class="col-md-3 portfolio-item">';
-                echo '<div class="image-container">';
-                echo '<div class="image-box">';
-                echo '<img src="' . $dir . $image . '" alt="Gallery Image" class="img-fluid">';                echo '</div>';
-                echo '</div>';
-                echo '</div>';
+                    echo '<div class="image-box">';
+                    echo '<img src="' . $dir . $image . '" alt="Gallery Image" class="img-fluid">';
+                    echo '<div class="image-details">' . '<h6>Title : </h6>' . htmlspecialchars($title) . '<br>'.'<h6>category : </h6>' .htmlspecialchars($category). '<br>'. '<h6>updated date : </h6>' .htmlspecialchars($upload_date). '</div>';
+                    echo '</div>';
+                    echo '</div>';
                 }
             }
             ?>

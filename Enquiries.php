@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photographer Portfolio</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .portfolio-item {
             margin-bottom: 30px;
@@ -51,7 +54,8 @@
     align-items: center;
     width: 100%;
     height: 300px;
-    background-image: url(https://placehold.co/100x400);
+    background-image: url('interanal_image/1.jpg');
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -101,7 +105,7 @@
   </div>
 <div class="container my-5">
         <h2 class="text-center">Submit Your Event Enquiry</h2>
-        <form action="submit_enquiry.php" method="POST">
+        <form  id = "enquirForm"action="submit_enquir.php" method="POST">
             <div class="mb-3">
                 <label for="event_type" class="form-label">Event Type</label>
                 <input type="text" class="form-control" id="event_type" name="event_type" required>
@@ -165,7 +169,48 @@
             © 2023 Photographer Portfolio. All rights reserved.
         </div>
     </footer>
-    <script type="text/javascript">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#enquirForm').on('submit', function(e) {
+                e.preventDefault();
+                alert("hi..")
+                $.ajax({
+                    type: 'POST',
+                    url: 'submit_enquir.php',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message,
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = 'Enquiries.php';
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <!--Start of Tawk.to Script-->
+    
+<script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -175,7 +220,16 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
+// Trigger custom message when chat starts
+Tawk_API = Tawk_API || {};
+        Tawk_API.onLoad = function() {
+            Tawk_API.addEvent("chat-start", function() {
+                Tawk_API.message("Hello! How can I assist you?");
+            });
+        };
 </script>
+<!--End of Tawk.to Script-->
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
