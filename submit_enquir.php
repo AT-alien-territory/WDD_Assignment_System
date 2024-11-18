@@ -6,7 +6,20 @@ session_start();
 include 'db.php';
 
 // Define the response array
+// SQL query to group inquiries by event_type and count them
+$query = "SELECT event_type, COUNT(*) AS count FROM enquiries GROUP BY event_type";
+$result = mysqli_query($conn, $query);
 
+$data = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+    // Return data as JSON
+    echo json_encode($data);
+} else {
+    echo json_encode(['error' => mysqli_error($conn)]);
+}
 
 // Check if the form is submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

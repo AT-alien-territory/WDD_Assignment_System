@@ -6,10 +6,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT user_id, password, name ,email,phone , image_url FROM Users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT user_id, password, name ,email,phone , address,image_url FROM Users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->bind_result($user_id, $hashed_password, $username ,$email , $phone,$image );
+    $stmt->bind_result($user_id, $hashed_password, $username ,$email , $phone , $address,$image );
     $stmt->fetch();
     $stmt->close();
 
@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         $_SESSION['email'] = $email;
         $_SESSION['phone'] = $phone;
         $_SESSION['profile_picture'] = $image;
+        $_SESSION['address'] = $address;
         
         echo json_encode(['status' => 'success', 'message' => 'Login successful!']);
     } else {

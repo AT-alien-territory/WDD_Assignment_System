@@ -177,7 +177,7 @@
         $(document).ready(function() {
             $('#enquirForm').on('submit', function(e) {
                 e.preventDefault();
-                alert("hi..")
+                // alert("hi..")
                 $.ajax({
                     type: 'POST',
                     url: 'submit_enquir.php',
