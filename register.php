@@ -47,6 +47,7 @@
 <body>
     <div class="register-container">
         <h2 class="text-center">Register</h2>
+        
         <form id="registerForm" method="POST" action="user_crud.php">
             <input type="hidden" name="create" value="1">
             <div class="form-group">
