@@ -101,7 +101,7 @@
         </div>
     </nav>
   <div class="page-image">
-  <h2>Enquiry</h2>
+  <h2>Contect</h2>
   </div>
 <div class="container my-5">
     <section id="contact" class="container mt-5">

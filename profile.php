@@ -165,7 +165,7 @@ $stmt = $conn->prepare("SELECT   name ,email,phone , address,image_url FROM User
     <div class="main-content">
         <div class="topbar">
             <div class="user-info">
-                <span>Welcome, <?php echo htmlspecialchars($image); ?></span>
+                <span>Welcome, <?php echo htmlspecialchars($username); ?></span>
             </div>
             <a href="logout_code.php"><i class='bx bx-log-out'></i> Logout</a>
         </div>

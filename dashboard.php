@@ -17,6 +17,13 @@ $username = $_SESSION['username'];
     <title>Dashboard</title>
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.1/css/boxicons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body>
     <div class="sidebar">
@@ -28,7 +35,7 @@ $username = $_SESSION['username'];
             <li><a href="profile.php"><i class='bx bx-user'></i> Profile</a></li>
             <li><a href="#"><i class='bx bx-photo-album'></i> Galleries</a></li>
             <li><a href="photographs.php"><i class='bx bx-image'></i> Photographs</a></li>
-            <li><a href="#"><i class='bx bx-envelope'></i> Enquiries</a></li>
+            <li><a href="admin_enquiries.php"><i class='bx bx-envelope'></i> Enquiries</a></li>
         </ul>
     </div>
     <div class="main-content">
@@ -38,60 +45,57 @@ $username = $_SESSION['username'];
             </div>
             <a href="logout_code.php"><i class='bx bx-log-out'></i> Logout</a>
         </div>
-        <div class="content">
-            <h1>Welcome, <?php echo htmlspecialchars($username); ?>!</h1>
-            <div class="photographs-section">
-                
-            <canvas id="myChart" width="400" height="400"></canvas>
-
-                <!-- Add your photographs content here -->
-            </div>
+        <div class="chart-container">
+            <h2 style="text-align: center;">Enquiries Submitted by Date</h2>
+            <canvas id="enquiryChart"></canvas>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
-    // Get the canvas element
-    var ctx = document.getElementById('myChart').getContext('2d');
+        // Fetch data from the backend API
+        fetch('get_enquiries.php') // Use the correct endpoint
+            .then(response => response.json())
+            .then(data => {
+                // Extract labels (dates) and data (counts) for the chart
+                const labels = data.map(item => item.date);
+                const counts = data.map(item => item.count);
 
-    // Create a chart
-    var myChart = new Chart(ctx, {
-        type: 'bar', // Chart type: 'line', 'bar', 'radar', etc.
-        data: {
-            labels: ['January', 'February', 'March', 'April'], // X-axis labels
-            datasets: [{
-                label: 'Monthly Sales', // Chart label
-                data: [12, 19, 3, 5], // Data points
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
-
+                // Create the chart
+                const ctx = document.getElementById('enquiryChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar', // Chart type
+                    data: {
+                        labels: labels, // X-axis labels (dates)
+                        datasets: [{
+                            label: 'Number of Enquiries', // Chart label
+                            data: counts, // Y-axis data (counts)
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)', // Bar color
+                            borderColor: 'rgba(54, 162, 235, 1)', // Bar border color
+                            borderWidth: 1 // Border width
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: (tooltipItem) => `Enquiries: ${tooltipItem.raw}`
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true // Start Y-axis at 0
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching enquiry data:', error));
+    </script>
 </body>
 </html>

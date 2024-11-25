@@ -184,7 +184,7 @@
                     data: $(this).serialize(),
                     dataType: 'json',
                     success: function(response) {
-
+                        // alert("hi..")
                         if (response.status === 'success') {
                             Swal.fire({
                                 icon: 'success',
